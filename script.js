@@ -34,6 +34,9 @@ Highcharts.chart('chart-level', {
       text: 'Percentage (%)'
     }
   },
+  credits: {
+    enabled: false
+  },
   series: [{
     name: 'Water Level',
     data: []
@@ -55,6 +58,9 @@ Highcharts.chart('chart-hardness', {
     title: {
       text: 'ppm'
     }
+  },
+  credits: {
+    enabled: false
   },
   series: [{
     name: 'Hardness',
@@ -83,41 +89,11 @@ function updateData() {
     const hardnessChart = Highcharts.charts[1];
     hardnessChart.series[0].addPoint([Date.now(), parseFloat(hardness)], true, hardnessChart.series[0].data.length >= 20);
   });
-
-  
-function writeToSheet() {
-    // Replace 'YOUR_FIREBASE_URL' with your Firebase database URL
-    var firebaseUrl = 'https://water-monitoring-1856d-default-rtdb.asia-southeast1.firebasedatabase.app';
-    
-    // Replace 'YOUR_SHEET_ID' with your Google Sheet ID
-    var sheetId = 'https://docs.google.com/spreadsheets/d/15BihzVfACBSfCYOj2qW1XxWeK8PQt9hYUP4GyLrI_L0/edit?usp=sharing';
-    
-    // Get the Firebase data
-    var response = UrlFetchApp.fetch(firebaseUrl);
-    var data = JSON.parse(response.getContentText());
-    
-    // Open the Google Sheet
-    var sheet = SpreadsheetApp.openById(sheetId).getActiveSheet();
-    
-    // Append the data to the sheet
-    sheet.appendRow([data.temperature, data.hardness, data.level, new Date()]);
-  }
 }
-
+  
 // Initial data update
 updateData();
 
 // Periodically update data
 setInterval(updateData, 2000);
-
-  
-  // Optional: Create a time-driven trigger to run the script periodically
-  function createTrigger() {
-    ScriptApp.newTrigger('writeToSheet')
-      .timeBased()
-      .everySeconds(5) // Adjust the interval as needed
-      .create();
-  }
-
-  createTrigger();
   
