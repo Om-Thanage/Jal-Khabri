@@ -2,9 +2,15 @@ body{
     background-color: #DFF5FF;
 }
 h2 {
-  font-size: 2.5rem;
+  font-size: 2.5rem ;
   text-align: center;
   color: #5356FF;
+}
+.fs-1{
+  font-size: 3rem;
+  font-weight: bolder;
+  color: #5356FF;
+  
 }
 h3{
   font-size: 2.0rem;
@@ -43,7 +49,7 @@ p {
 }
 
 
-@media screen and (min-width: 1041px){
+@media screen and (min-width: 768px){
   .components{
     display: flex;
     justify-content: center;
@@ -69,5 +75,66 @@ p {
   h3{
     padding-left: 50px;
     text-align: left;
+  }
+}
+
+.toggle {
+  appearance: none;
+  position: relative;
+  font-size: 1em;
+  border: max(1px, 0.05em) solid;
+  border-radius: 2em;
+  width: 8em; /* Increased width */
+  height: 3em; /* Increased height */
+  aspect-ratio: 1; /* Added aspect-ratio property */
+  background: #67C6E3;
+  box-sizing: content-box;
+  overflow: hidden;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 1.8em;
+    width: 1.4em; /* Adjusted width */
+    height: 1.4em; /* Adjusted height */
+    background-size: 1.4em 0.7em;
+    background-position: 0 0;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: background-position 0.75s, left 0.75s;
+    border: 1px solid #000;
+    background-color: red;
+    box-shadow: inset 0.1em 0 0.1em #0008, inset -0.1em 0 0.1em #0008;
+  }
+  
+  &:checked {
+    &::before {
+      left: calc(100% - 1.8em); /* Adjusted left position */
+      background-position: 1.4em 0;
+      background-color: green;
+    }
+  }
+  
+  &[disabled] {
+    opacity: 0.25;
+  }
+}
+
+@media print {
+  .toggle {
+    &, &::before, &::after {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+}
+
+@media (prefers-reduced-motion) {
+  .toggle {
+    &, &::before, &::after {
+      transition: none !important;
+      animation: none !important;
+    }
   }
 }

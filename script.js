@@ -37,9 +37,18 @@ Highcharts.chart('chart-level', {
   credits: {
     enabled: false
   },
+  plotOptions: {
+    series: {
+      maxPointWidth: 10 // Adjust this value to fit your design
+    }
+  },
+  scrollbar: {
+    enabled: true
+  },
   series: [{
     name: 'Water Level',
-    data: []
+    data: [],
+    turboThreshold: 0 // Disable initial series threshold
   }]
 });
 
@@ -62,9 +71,18 @@ Highcharts.chart('chart-hardness', {
   credits: {
     enabled: false
   },
+  plotOptions: {
+    series: {
+      maxPointWidth: 10 // Adjust this value to fit your design
+    }
+  },
+  scrollbar: {
+    enabled: true
+  },
   series: [{
     name: 'Hardness',
-    data: []
+    data: [],
+    turboThreshold: 0 // Disable initial series threshold
   }]
 });
 
@@ -83,7 +101,7 @@ function updateData() {
 
     //Update Water Level Chart
     const levelChart = Highcharts.charts[0];
-    levelChart.series[0].addPoint([Date.now(), parseFloat(level)], true, levelChart.series[0].data.length >= 20);
+    levelChart.series[0].addPoint([Date.now(), parseFloat(level)], true, levelChart.series[0].data.length >= 20 );
 
     // Update Hardness Chart
     const hardnessChart = Highcharts.charts[1];
@@ -92,8 +110,25 @@ function updateData() {
 }
   
 // Initial data update
-updateData();
+document.addEventListener("DOMContentLoaded", function() {
+  // Get the checkbox element
+  var checkbox = document.querySelector('.toggle');
+
+  // Add event listener for the 'change' event
+  checkbox.addEventListener('change', function() {
+    // Check if the checkbox is checked
+    if (checkbox.checked) {
+      // If checked, call the updateData function
+      updateData();
+      setInterval(updateData, 2000);
+    }
+    else {
+      // If unchecked, clear the interval
+      clearInterval(intervalId);
+    }
+  });
+});
 
 // Periodically update data
-setInterval(updateData, 2000);
+
   
