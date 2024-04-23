@@ -115,7 +115,7 @@ function updateData() {
 
     document.getElementById('temperature').innerText = temperature;
     document.getElementById('hardness').innerText = hardness;
-    document.getElementById('level').innerText = level;
+    //document.getElementById('level').innerText = level;
 
     //Update Water Level Chart
     const levelChart = Highcharts.charts[0];
